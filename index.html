@@ -1,29 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIGA: Vision-as-Inverse-Graphics Agent via Interleaved Multimodal Reasoning</title>
+    <title>3D Freelancer Portfolio</title>
     <link rel="icon" type="image/png" href="assets/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --bg-tertiary: #f0f1f3;
-            --text-primary: #1a1a2e;
-            --text-secondary: #4a4a5a;
-            --text-muted: #6b7280;
-            --accent-primary: #003262;
-            --accent-secondary: #002147;
-            --accent-glow: rgba(0, 50, 98, 0.1);
-            --border-color: rgba(0, 0, 0, 0.1);
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --gradient-1: linear-gradient(135deg, #003262 0%, #002147 50%, #001a33 100%);
-            --gradient-2: linear-gradient(135deg, rgba(0, 50, 98, 0.05) 0%, rgba(0, 33, 71, 0.02) 100%);
+            --bg: #f7f9fb;
+            --surface: #ffffff;
+            --surface-soft: rgba(255, 255, 255, 0.75);
+            --text: #0e2231;
+            --muted: #496072;
+            --line: rgba(14, 34, 49, 0.14);
+            --accent: #0f809c;
+            --accent-strong: #005f77;
+            --highlight: #f7b267;
+            --shadow: 0 20px 45px rgba(9, 44, 62, 0.12);
+            --radius: 18px;
         }
 
         * {
@@ -37,2292 +34,505 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            background-image:
-                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: var(--text-primary);
+            font-family: "Space Grotesk", "Noto Sans KR", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(1100px 500px at 10% -20%, rgba(15, 128, 156, 0.22), transparent 68%),
+                radial-gradient(900px 540px at 95% 4%, rgba(247, 178, 103, 0.27), transparent 58%),
+                linear-gradient(160deg, #f5f8fb 0%, #eef3f7 52%, #f7f9fb 100%);
+            min-height: 100vh;
             line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Container */
         .container {
-            max-width: 1200px;
+            width: min(1150px, 94vw);
             margin: 0 auto;
-            padding: 0 24px;
         }
 
-        .container.wide {
-            max-width: 1400px;
+        .topbar {
+            position: sticky;
+            top: 14px;
+            z-index: 10;
+            margin-top: 14px;
         }
 
-        /* Header / Hero Section */
-        .hero {
-            min-height: auto;
+        .topbar-inner {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 60px 24px 40px;
-            position: relative;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 16px;
+            border: 1px solid var(--line);
+            background: var(--surface-soft);
+            border-radius: 999px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 24px rgba(18, 53, 75, 0.08);
         }
 
-        .badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: #f3f4f6;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #374151;
-            letter-spacing: 0.3px;
-            margin-bottom: 24px;
-        }
-
-        .title {
-            font-family: 'Source Serif 4', Georgia, serif;
-            font-size: clamp(1.8rem, 4.5vw, 2.8rem);
-            font-weight: 600;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            color: #111827;
-            letter-spacing: -0.02em;
-        }
-
-        .title .highlight {
-            color: #003262;
-            -webkit-text-fill-color: #003262;
-            background: none;
-        }
-
-        .tagline {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(0.95rem, 2vw, 1.15rem);
-            font-weight: 500;
-            color: #6b7280;
-            margin-top: 16px;
-            margin-bottom: 24px;
-            letter-spacing: 0.02em;
-            font-style: italic;
-        }
-
-        .subtitle {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(1rem, 2vw, 1.1rem);
-            font-weight: 400;
-            color: #374151;
-            max-width: 800px;
-            margin-top: 32px;
-            margin-bottom: 0;
-            line-height: 1.7;
-            background: linear-gradient(135deg, #e8f0f7 0%, #d4e3f0 100%);
-            border: 1px solid #a8c5dd;
-            border-left: 4px solid #003262;
-            border-radius: 6px;
-            padding: 16px 20px;
-            text-align: left;
-        }
-
-        .subtitle strong {
-            color: #002147;
-            font-weight: 600;
-        }
-
-        /* Authors */
-        .authors {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .author-row {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .author {
+        .logo {
+            font-weight: 700;
             font-size: 0.95rem;
-            font-weight: 400;
-            color: #374151;
+            letter-spacing: 0.08em;
+            color: var(--accent-strong);
+            text-transform: uppercase;
         }
 
-        .author sup {
-            color: #6b7280;
-            font-size: 0.7em;
-            margin-left: 1px;
-        }
-
-        .affiliations {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px 20px;
-            margin-bottom: 28px;
-        }
-
-        .affiliation {
-            font-size: 0.85rem;
-            color: #6b7280;
-        }
-
-        .affiliation sup {
-            color: #9ca3af;
-            margin-right: 3px;
-        }
-
-        /* Links */
         .links {
             display: flex;
+            align-items: center;
+            gap: 6px;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 0;
+            justify-content: flex-end;
         }
 
-        .link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            color: #374151;
+        .links a {
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
+            color: var(--text);
+            font-size: 0.88rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            padding: 8px 14px;
             transition: all 0.2s ease;
         }
 
-        .link-btn:hover {
-            background: #f9fafb;
-            border-color: #d1d5db;
+        .links a:hover {
+            border-color: var(--line);
+            background: rgba(255, 255, 255, 0.8);
         }
 
-        .link-btn i {
-            font-size: 1rem;
+        .hero {
+            padding: 70px 0 48px;
         }
 
-        /* Paper button - Berkeley Blue */
-        .link-btn.paper {
-            background: #003262;
-            border: none;
-            color: #fff;
-            font-weight: 600;
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 26px;
+            align-items: center;
         }
 
-        .link-btn.paper i {
-            color: #fff;
+        .hero-copy {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 34px;
+            box-shadow: var(--shadow);
+            animation: enterUp 0.8s ease both;
         }
 
-        .link-btn.paper:hover {
-            background: #002147;
-        }
-
-        /* Code button - dark gray/black (GitHub style) */
-        .link-btn.code {
-            background: #24292f;
-            border: none;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .link-btn.code i {
-            color: #fff;
-        }
-
-        .link-btn.code:hover {
-            background: #32383f;
-        }
-
-        /* arXiv button - red */
-        .link-btn.arxiv {
-            background: #b31b1b;
-            border: none;
-            color: #fff;
-        }
-
-        .link-btn.arxiv i {
-            color: #fff;
-        }
-
-        .link-btn.arxiv:hover {
-            background: #991515;
-        }
-
-        /* Benchmark button - Berkeley Gold */
-        .link-btn.benchmark {
-            background: #FDB515;
-            border: none;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .link-btn.benchmark svg {
-            color: #000;
-        }
-
-        .link-btn.benchmark:hover {
-            background: #E8A700;
-        }
-
-        /* Hero Video */
-        .hero-video-container {
-            max-width: 1000px;
-            margin: 0 auto 40px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: var(--bg-secondary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            animation: fadeInUp 0.8s ease-out 0.5s both;
-        }
-
-        .hero-video {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-        }
-
-        /* Abstract */
-        .abstract {
-            max-width: 800px;
-            margin: 0 auto 20px;
-            padding: 24px 32px;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            text-align: left;
-        }
-
-        .abstract h3 {
+        .eyebrow {
+            display: inline-block;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #6b7280;
+            color: var(--accent-strong);
             margin-bottom: 12px;
         }
 
-        .abstract p {
-            font-family: 'Source Serif 4', Georgia, serif;
-            font-size: 1.05rem;
-            color: #374151;
-            line-height: 1.75;
+        h1 {
+            font-size: clamp(1.9rem, 4vw, 3.15rem);
+            line-height: 1.14;
+            margin-bottom: 14px;
         }
 
-        /* Section Styles - Professional */
+        .hero-line {
+            font-family: "Noto Sans KR", sans-serif;
+            font-size: clamp(0.97rem, 1.9vw, 1.12rem);
+            color: var(--muted);
+        }
+
+        .hero-line + .hero-line {
+            margin-top: 8px;
+        }
+
+        .hero-media {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            animation: enterUp 0.8s ease 0.15s both;
+            background: #d6e2ea;
+        }
+
+        .hero-media video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 4 / 3;
+        }
+
         .section {
-            padding: 48px 0;
-            position: relative;
+            padding: 38px 0;
         }
 
-        .section-header {
-            text-align: left;
-            margin-bottom: 32px;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
-        .section-tag {
-            display: inline-block;
-            padding: 4px 10px;
-            background: #f3f4f6;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
+        .section-head h2 {
+            font-size: clamp(1.4rem, 2.8vw, 2rem);
+            line-height: 1.2;
         }
 
-        .section-title {
-            font-family: 'Source Serif 4', Georgia, serif;
-            font-size: clamp(1.6rem, 3vw, 2rem);
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #111827;
-            letter-spacing: -0.01em;
+        .section-head p {
+            color: var(--muted);
+            max-width: 650px;
         }
 
-        .section-desc {
-            font-size: 0.95rem;
-            color: #4b5563;
-            max-width: 1000px;
-            margin: 0;
-            line-height: 1.7;
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
         }
 
-        /* Video Section */
-        .pipeline-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .pipeline-content .section-header {
-            max-width: 100%;
-        }
-
-        .video-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 12px;
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 15px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: var(--bg-secondary);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 28px rgba(17, 45, 62, 0.08);
+            animation: enterUp 0.7s ease both;
         }
 
-        .video-caption {
-            font-size: 0.9rem;
-            color: #6b7280;
-            line-height: 1.6;
-            margin-top: 16px;
-            text-align: center;
+        .card:nth-child(2) {
+            animation-delay: 0.1s;
         }
 
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            background: var(--bg-tertiary);
+        .card:nth-child(3) {
+            animation-delay: 0.2s;
         }
 
-        .video-wrapper video,
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .card-media {
+            background: #d8e4ec;
+            border-bottom: 1px solid var(--line);
+            aspect-ratio: 16 / 11;
+            overflow: hidden;
+        }
+
+        .card-media img,
+        .card-media video {
             width: 100%;
             height: 100%;
+            display: block;
             object-fit: cover;
         }
 
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-tertiary);
-            color: var(--text-muted);
+        .card-body {
+            padding: 14px 15px 16px;
         }
 
-        .video-placeholder i {
-            font-size: 4rem;
-            margin-bottom: 16px;
-            color: var(--accent-primary);
-            opacity: 0.6;
-        }
-
-        /* Results Section */
-        .results-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 48px;
-        }
-
-        .tab-btn {
-            padding: 12px 28px;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            color: var(--text-secondary);
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            border-color: var(--accent-primary);
-            color: var(--text-primary);
-        }
-
-        .tab-btn.active {
-            background: var(--gradient-1);
-            border-color: transparent;
-            color: var(--bg-primary);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* Result Cards - Professional compact design */
-        .results-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-            max-width: 1000px;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 768px) {
-            .results-grid {
-                max-width: calc(100vw - 24px) !important;
-                width: calc(100vw - 24px) !important;
-                margin-left: -12px !important;
-                margin-right: -12px !important;
-                padding-left: 12px !important;
-                padding-right: 12px !important;
-                box-sizing: border-box !important;
-            }
-        }
-
-        .result-card {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-
-        .result-card:hover {
-            border-color: #d1d5db;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .result-header {
-            display: none;
-        }
-
-        .result-header h4 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #111827;
-            margin: 0;
-        }
-
-        .result-header p {
-            font-size: 0.75rem;
-            color: #6b7280;
-            font-style: normal;
-            margin: 0;
-            text-align: center;
-        }
-
-        .result-header .header-left {
-            text-align: left;
-            font-size: 0.75rem;
-            color: #111827;
-            font-weight: 500;
-        }
-
-        .result-header .header-center {
-            text-align: center;
-            font-size: 0.7rem;
-            color: #6b7280;
-            font-style: italic;
-        }
-
-        .result-header .header-right {
-            text-align: right;
-            font-size: 0.75rem;
-            color: #111827;
-        }
-
-        .result-media {
-            position: relative;
-        }
-
-        .floating-labels {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            right: 8px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            z-index: 20;
-            pointer-events: none;
-        }
-
-        .floating-label {
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            color: #fff;
-            line-height: 1.2;
-            text-align: left;
-            display: inline-block;
-            max-width: fit-content;
-            font-weight: 400;
-            font-style: normal;
-            justify-self: end;
-        }
-
-        .floating-label.label-left {
-            justify-self: start;
-        }
-
-        .floating-label.label-center {
-            justify-self: center;
-            font-style: italic;
-        }
-
-        .floating-label.label-right {
-            justify-self: center;
-            font-style: italic;
-        }
-
-        /* More Results Toggle */
-        .more-results-toggle {
-            display: flex;
-            justify-content: center;
-            margin-top: 16px;
-        }
-
-        .more-results-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #f3f4f6;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #374151;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .more-results-btn:hover {
-            background: #e5e7eb;
-            border-color: #d1d5db;
-        }
-
-        .more-results-btn i {
-            transition: transform 0.3s ease;
-        }
-
-        .more-results-btn.expanded i {
-            transform: rotate(180deg);
-        }
-
-        .more-results-content {
-            display: none;
-            margin-top: 16px;
-        }
-
-        .more-results-content.show {
-            display: block;
-        }
-
-        /* Scrollable container for static results */
-        .static-results-row {
-            max-width: 1000px;
-            margin: 0 auto 24px auto;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 768px) {
-            .static-results-row {
-                max-width: calc(100vw - 24px) !important;
-                width: calc(100vw - 24px) !important;
-                margin-left: -12px !important;
-                margin-right: -12px !important;
-                padding: 0 !important;
-                box-sizing: border-box !important;
-            }
-        }
-
-        .static-scroll-container {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            width: 100%;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-            cursor: grab;
-            user-select: none;
-        }
-
-        .static-scroll-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
-
-        .static-scroll-container.grabbing {
-            cursor: grabbing;
-        }
-
-        .static-scroll-inner {
-            display: flex;
-            gap: 16px;
-        }
-
-        .static-result-item {
-            flex: 0 0 600px;
-            background: #fff;
-            border: none;
-            border-radius: 0;
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-
-        .static-result-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .static-result-header {
-            padding: 0;
-            background: transparent;
-            border-bottom: none;
-            display: none;
-        }
-
-        .static-result-header h4 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #111827;
-            margin: 0;
-        }
-
-        .static-result-media {
-            display: flex;
-            line-height: 0;
-        }
-
-        .static-media-item {
-            position: relative;
-            flex: 1;
-            aspect-ratio: 1/1;
-            background: #000;
-            overflow: hidden;
-            line-height: 0;
-        }
-
-        .static-media-item img {
-            width: calc(100% + 1px);
-            height: calc(100% + 1px);
-            object-fit: fill;
-            display: block;
-            margin: 0;
-            padding: 0;
-            border: none;
-            margin-left: -0.5px;
-            margin-top: -0.5px;
-        }
-
-        .static-media-item video {
-            position: absolute;
-            top: -0.5px;
-            left: -0.5px;
-            width: calc(100% + 1px);
-            height: calc(100% + 1px);
-            object-fit: fill;
-            display: block;
-            margin: 0;
-            padding: 0;
-            border: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .static-media-item:hover video {
-            opacity: 1;
-        }
-
-        .static-media-label {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            padding: 3px 6px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 3px;
-            font-size: 0.65rem;
-            color: #fff;
-            backdrop-filter: blur(4px);
-            text-align: left;
-            line-height: 1.3;
-            z-index: 10;
-        }
-
-        /* Section footnote */
-        .section-footnote {
-            font-size: 0.8rem;
-            color: #6b7280;
-            margin-top: 24px;
-            text-align: center;
-            font-style: italic;
-        }
-
-        .result-media {
-            display: flex;
-            width: 100%;
-            box-sizing: border-box;
-            line-height: 0;
-        }
-
-        .result-media.single {
-            grid-template-columns: 1fr;
-        }
-
-        .media-item {
-            position: relative;
-            flex: 1;
-            aspect-ratio: 1/1;
-            background: #000;
-            overflow: hidden;
-            box-sizing: border-box;
-            line-height: 0;
-        }
-
-        .media-item img,
-        .media-item video {
-            width: calc(100% + 1px);
-            height: calc(100% + 1px);
-            object-fit: fill;
-            display: block;
-            margin: 0;
-            padding: 0;
-            border: none;
-            margin-left: -0.5px;
-            margin-top: -0.5px;
-        }
-
-        .media-label {
-            position: absolute;
-            bottom: 6px;
-            left: 6px;
-            padding: 3px 6px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 3px;
-            font-size: 0.65rem;
-            color: #fff;
-            backdrop-filter: blur(4px);
-            text-align: center;
-            line-height: 1.3;
-            z-index: 10;
-            display: none; /* Hide labels for dynamic results */
-        }
-
-        .result-card.show-labels .media-label {
-            display: block; /* Only show for cards with show-labels class */
-        }
-
-        .media-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .media-placeholder i {
-            font-size: 2rem;
-            margin-bottom: 8px;
-            opacity: 0.5;
-        }
-
-        /* Tables Section */
-        .tables-container {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .table-card {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e5e7eb;
-            background: #f9fafb;
-        }
-
-        .table-header h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #111827;
+        .card-body h3 {
+            font-size: 1.03rem;
             margin-bottom: 6px;
         }
 
-        .table-header p {
-            font-size: 0.85rem;
-            color: #6b7280;
-            line-height: 1.5;
+        .card-body p {
+            color: var(--muted);
+            font-size: 0.92rem;
         }
 
-        .table-header-with-image {
-            display: flex;
-            gap: 32px;
-            align-items: flex-start;
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
         }
 
-        .table-header-text {
-            flex: 1;
-            max-width: 65%;
+        .service-item {
+            background: linear-gradient(180deg, #ffffff 0%, #f4f8fb 100%);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 8px 24px rgba(23, 58, 79, 0.07);
         }
 
-        .table-header-image {
-            flex-shrink: 0;
-            width: 32%;
-        }
-
-        .table-header-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .table-header-image-full {
-            margin-top: 16px;
-        }
-
-        .table-header-image-full img {
-            width: 100%;
-            height: auto;
-        }
-
-        .table-wrapper {
-            padding: 16px 24px;
-            overflow-x: auto;
-        }
-
-        .table-video-container {
-            padding: 20px 24px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .table-video-container .video-caption {
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 12px;
-            font-style: italic;
-            text-align: center;
-        }
-
-        .table-video-container video {
-            width: 100%;
-            border-radius: 6px;
+        .service-item strong {
+            color: var(--accent-strong);
             display: block;
+            margin-bottom: 5px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-
-        th, td {
-            padding: 10px 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        th {
-            font-weight: 600;
-            color: #374151;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            background: #f9fafb;
-        }
-
-        td {
-            color: #374151;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-variant-numeric: tabular-nums lining-nums;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: #f9fafb;
-        }
-
-        .best-score {
-            color: #059669;
-            font-weight: 600;
-        }
-
-        .method-name {
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            color: #111827;
-        }
-
-        .method-ours {
-            background: #f0fdf4 !important;
-        }
-
-        .method-ours .method-name {
-            color: #059669;
-        }
-
-        .method-baseline {
-            background: #f3f4f6 !important;
-        }
-
-        .method-baseline .method-name {
-            color: #374151;
-        }
-
-        /* Improvement percentage badge */
-        .improvement-badge {
-            display: inline-block;
-            padding: 1px 4px;
-            margin-left: 4px;
-            background: #ecfdf5;
-            border-radius: 3px;
-            font-size: 0.7em;
-            font-weight: 500;
-            color: #059669;
-            white-space: nowrap;
-        }
-
-        .improvement-badge.high {
-            background: #ecfdf5;
-            color: #059669;
-        }
-
-        .improvement-badge.very-high {
-            background: #dcfce7;
-            color: #047857;
-        }
-
-        /* BibTeX Section */
-        .bibtex-section {
-            background: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .bibtex-container {
-            max-width: 725px;
-            margin: 0 auto;
-        }
-
-        .bibtex-box {
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            padding: 20px;
+        .process-track {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
             position: relative;
         }
 
-        .bibtex-box pre {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.8rem;
-            color: #4b5563;
-            line-height: 1.5;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 6px 12px;
-            background: #f3f4f6;
-            border: 1px solid #e5e7eb;
-            border-radius: 4px;
-            color: #6b7280;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .copy-btn:hover {
-            background: #e5e7eb;
-            color: #374151;
-        }
-
-        /* Footer */
-        footer {
-            padding: 32px 24px;
+        .process-step {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 15px;
             text-align: center;
-            color: #9ca3af;
-            font-size: 0.85rem;
-            border-top: 1px solid #e5e7eb;
+            font-weight: 600;
         }
 
-        footer a {
-            color: #6b7280;
+        .process-step .index {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            background: rgba(15, 128, 156, 0.14);
+            color: var(--accent-strong);
+            font-size: 0.82rem;
+        }
+
+        .process-step .label {
+            display: block;
+            color: var(--text);
+            font-size: 0.96rem;
+        }
+
+        .process-arrow {
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 6px 0;
+            letter-spacing: 0.06em;
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, rgba(15, 128, 156, 0.12) 0%, rgba(247, 178, 103, 0.2) 100%);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-box a {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 700;
+            color: var(--accent-strong);
             text-decoration: none;
+            border-bottom: 1px solid rgba(0, 95, 119, 0.45);
         }
 
-        footer a:hover {
-            color: #374151;
+        .contact-box p {
+            margin-top: 8px;
+            color: var(--muted);
+            font-family: "Noto Sans KR", sans-serif;
         }
 
-        /* Animations - Subtle */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        footer {
+            padding: 30px 0 42px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.86rem;
         }
 
-        /* Scroll animations - More subtle */
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease-out;
-        }
-
-        .scroll-animate.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive - Tablet */
-        @media (max-width: 1024px) {
-            .results-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+        @keyframes enterUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* Responsive - Mobile */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 40px 16px;
-                min-height: auto;
+        @media (max-width: 980px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
             }
 
-            .title {
-                font-size: clamp(1.8rem, 8vw, 2.5rem);
+            .works-grid,
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
             }
 
-            .subtitle {
-                font-size: clamp(0.95rem, 4vw, 1.1rem);
-                max-width: 100%;
-                margin-bottom: 24px;
+            .process-track {
+                grid-template-columns: 1fr;
             }
 
-            .author-row {
-                gap: 12px;
-                flex-wrap: wrap;
+            .process-arrow {
+                letter-spacing: 0.1em;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .topbar {
+                top: 8px;
             }
 
-            .author {
-                font-size: 0.85rem;
+            .topbar-inner {
+                border-radius: 18px;
             }
 
-            .affiliation {
-                font-size: 0.8rem;
-            }
-
-            .affiliations {
-                margin-bottom: 24px;
+            .logo {
+                display: none;
             }
 
             .links {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 8px;
-                margin-bottom: 32px;
-            }
-
-            .link-btn {
-                padding: 10px 16px;
-                font-size: 0.85rem;
-            }
-
-            .hero-video-container {
-                max-width: 100%;
-                margin: 0 auto 24px;
-                border-radius: 8px;
-            }
-
-            .abstract {
-                padding: 16px;
-                margin: 0 auto 24px;
-                border-radius: 12px;
-            }
-
-            .abstract h3 {
-                font-size: 0.7rem;
-                margin-bottom: 10px;
-            }
-
-            .abstract p {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
-            .section {
-                padding: 40px 0;
-            }
-
-            .section-header {
-                margin-bottom: 24px;
-            }
-
-            .section-title {
-                font-size: clamp(1.5rem, 6vw, 1.8rem);
-            }
-
-            .section-desc {
-                font-size: 0.9rem;
-                max-width: 100%;
-            }
-
-            .container {
-                padding: 0 12px !important;
-                max-width: 100% !important;
-            }
-
-            .container.wide {
-                padding: 0 12px !important;
-                max-width: 100% !important;
-            }
-
-            /* Mobile: Single column for result cards */
-            .results-grid {
-                grid-template-columns: 1fr !important;
-                gap: 12px !important;
-            }
-
-            .result-card {
-                border-radius: 8px;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .result-header {
-                padding: 8px 10px;
-            }
-
-            .result-header h4 {
-                font-size: 0.85rem;
-            }
-
-            .result-header p {
-                font-size: 0.75rem;
-            }
-
-            /* Mobile: Keep 3 columns for media items (horizontal strip) */
-            .result-media {
-                grid-template-columns: repeat(3, 1fr) !important;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .media-item {
-                aspect-ratio: 1/1;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .media-item img,
-            .media-item video {
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .media-label {
-                bottom: 4px;
-                left: 4px;
-                padding: 2px 4px;
-                font-size: 0.55rem;
-            }
-
-            .static-media-label {
-                top: 4px;
-                left: 4px;
-                padding: 2px 4px;
-                font-size: 0.55rem;
-            }
-
-            /* Mobile: Scrollable row adjustments */
-            .static-results-row {
-                max-width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-
-            .static-scroll-container {
-                padding-left: 12px !important;
-                padding-right: 12px !important;
-                padding-bottom: 12px !important;
-                gap: 12px !important;
-                margin: 0 !important;
-            }
-
-            .static-result-item {
-                flex: 0 0 calc(100vw - 36px) !important;
-                width: calc(100vw - 36px) !important;
-                min-width: auto !important;
-                max-width: calc(100vw - 36px) !important;
-            }
-
-            .static-result-header {
-                padding: 8px 10px;
-            }
-
-            .static-result-header h4 {
-                font-size: 0.85rem;
-            }
-
-            .static-result-media {
-                grid-template-columns: repeat(2, 1fr) !important;
-                width: 100% !important;
-            }
-
-            .static-media-item {
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .static-media-item img,
-            .static-media-item video {
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .video-container {
-                max-width: 100%;
-                border-radius: 8px;
-            }
-
-            .table-wrapper {
-                padding: 8px;
-                overflow-x: auto;
-            }
-
-            .table-header {
-                padding: 12px;
-            }
-
-            .table-header h4 {
-                font-size: 1rem;
-            }
-
-            .table-header p {
-                font-size: 0.8rem;
-            }
-
-            .table-header-with-image {
-                flex-direction: column;
-            }
-
-            .table-header-text {
-                max-width: 100%;
-            }
-
-            .table-header-image {
+                justify-content: center;
                 width: 100%;
-                max-width: 250px;
-                margin: 12px auto 0;
             }
 
-            table {
-                font-size: 0.7rem;
-            }
-
-            th, td {
-                padding: 6px 8px;
-                font-size: 0.7rem;
-            }
-
-            .method-name {
-                font-size: 0.7rem;
-                min-width: 80px;
-            }
-
-            .improvement-badge {
-                padding: 1px 3px;
-                font-size: 0.55em;
-                margin-left: 2px;
-            }
-
-            .table-video-container {
-                padding: 12px;
-            }
-
-            .table-video-container .video-caption {
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Extra small devices */
-        @media (max-width: 480px) {
             .hero {
-                padding: 24px 12px;
+                padding-top: 48px;
             }
 
-            .badge {
-                padding: 6px 14px;
-                font-size: 0.75rem;
-                margin-bottom: 20px;
+            .hero-copy {
+                padding: 22px;
             }
 
-            .title {
-                font-size: 1.4rem;
-                margin-bottom: 10px;
+            .section-head {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .subtitle {
-                font-size: 0.9rem;
-                margin-bottom: 20px;
-            }
-
-            .authors {
-                margin-bottom: 10px;
-            }
-
-            .author {
-                font-size: 0.8rem;
-            }
-
-            .author-row {
-                gap: 8px;
-            }
-
-            .affiliation {
-                font-size: 0.75rem;
-            }
-
-            .affiliations {
-                gap: 4px 12px;
-                margin-bottom: 20px;
-            }
-
-            .links {
-                gap: 6px;
-            }
-
-            .link-btn {
-                padding: 8px 12px;
-                font-size: 0.8rem;
-                gap: 6px;
-            }
-
-            .link-btn i {
-                font-size: 0.9rem;
-            }
-
-            .abstract {
-                padding: 12px;
-            }
-
-            .abstract h3 {
-                font-size: 0.65rem;
-            }
-
-            .abstract p {
-                font-size: 0.85rem;
-            }
-
-            .section {
-                padding: 30px 0;
-            }
-
-            .section-header {
-                margin-bottom: 20px;
-            }
-
-            .section-tag {
-                padding: 4px 10px;
-                font-size: 0.7rem;
-            }
-
-            .section-title {
-                font-size: 1.3rem;
-            }
-
-            .section-desc {
-                font-size: 0.85rem;
-            }
-
-            .result-header {
-                padding: 6px 8px;
-            }
-
-            .result-header h4 {
-                font-size: 0.8rem;
-            }
-
-            .result-header p {
-                font-size: 0.7rem;
-            }
-
-            .media-label {
-                font-size: 0.5rem;
-                padding: 2px 3px;
-            }
-
-            th, td {
-                padding: 4px 6px;
-                font-size: 0.65rem;
-            }
-
-            .method-name {
-                font-size: 0.65rem;
-                min-width: 60px;
-            }
-
-            .improvement-badge {
-                font-size: 0.5em;
-                padding: 1px 2px;
-            }
-
-            .bibtex-box {
-                padding: 12px;
-            }
-
-            .bibtex-box pre {
-                font-size: 0.7rem;
-            }
-
-            .copy-btn {
-                padding: 6px 10px;
-                font-size: 0.7rem;
-            }
-
-            footer {
-                padding: 24px 12px;
-                font-size: 0.8rem;
+            .works-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1 class="title">
-            <span class="highlight">V</span>ision-as-<span class="highlight">I</span>nverse-<span class="highlight">G</span>raphics <span class="highlight">A</span>gent<br>via Interleaved Multimodal Reasoning<br>
-        </h1>
-        <p class="tagline">An agent that thinks with a graphics engine like Blender</p>
-
-        <div class="authors">
-            <div class="author-row">
-                <span class="author">Shaofeng Yin<sup>1,4</sup></span>
-                <span class="author">Jiaxin Ge<sup>1</sup></span>
-                <span class="author">Zora Zhiruo Wang<sup>2</sup></span>
-                <span class="author">Xiuyu Li<sup>1</sup></span>
-            </div>
-            <div class="author-row">
-                <span class="author">Michael J. Black<sup>3</sup></span>
-                <span class="author">Trevor Darrell<sup>1</sup></span>
-                <span class="author">Angjoo Kanazawa<sup>1</sup></span>
-                <span class="author">Haiwen Feng<sup>1,3,4,†</sup></span>
-            </div>
-        </div>
-
-        <div class="affiliations">
-            <span class="affiliation"><sup>1</sup>University of California, Berkeley</span>
-            <span class="affiliation"><sup>2</sup>Carnegie Mellon University</span>
-            <span class="affiliation"><sup>3</sup>Max Planck Institute for Intelligent Systems</span>
-            <span class="affiliation"><sup>4</sup>Impossible Inc.</span>
-        </div>
-
-        <div class="links">
-            <a href="https://arxiv.org/abs/2601.11109" class="link-btn paper" target="_blank">
-                <i class="fas fa-file-alt"></i>
-                Paper
-            </a>
-            <a href="https://github.com/Fugtemypt123/VIGA" class="link-btn code" target="_blank">
-                <i class="fab fa-github"></i>
-                Code
-            </a>
-            <a href="https://huggingface.co/datasets/DietCoke4671/BlenderBench" class="link-btn benchmark" target="_blank">
-                <img src="assets/huggingface_logo-noborder.svg" width="20" height="20" style="display: inline-block; vertical-align: middle;">
-                Benchmark
-            </a>
-        </div>
-
-        <p class="subtitle">
-            <strong>TL;DR:</strong> We introduce VIGA (Vision-as-Inverse-Graphics Agent), a multimodal agent that reconstructs images as editable scene programs through an analysis-by-synthesis loop, employing interleaved multimodal reasoning and an evolving contextual memory to  "vibe code" the scene, its physics, and interactions.
-        </p>
-
-    </section>
-
-    <!-- Pipeline Video Section -->
-    <section class="section" id="pipeline">
-        <div class="container wide">
-            <div class="pipeline-content">
-
-                <div class="video-container scroll-animate">
-                    <div class="video-wrapper">
-                        <!-- Replace with actual video -->
-                        <div class="video-placeholder">
-                            <i class="fas fa-play-circle"></i>
-                            <span>Pipeline Video Placeholder</span>
-                            <span style="font-size: 0.8rem; margin-top: 8px;">Replace with: video/pipeline.mp4</span>
-                        </div>
-                        <video autoplay muted loop playsinline controls>
-                            <source src="video/video1_cursor.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-                <p class="video-caption scroll-animate">Given any input image, VIGA reconstructs the 3D scene in Blender through interleaved multimodal reasoning. It alternates between generator and verifier roles, proposing executable code that modifies the scene, then observing the updated scene to produce feedback for refinement.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vibe-code a Physical Scene Section -->
-    <section class="section" id="dynamic-scenes">
-        <div class="container wide">
-            <div class="section-header scroll-animate">
-                <h2 class="section-title">Vibe-code a Physical Scene with Interactions</h2>
-                <p class="section-desc">VIGA can build the scene from scratch by creating 3D assets from basic geometric primitives (e.g., parametric cuboids, spheroids) in Blender, and it can also leverage off-the-shelf 3D asset generation tools such as Meshy or SAM-3D to obtain high-quality assets that provide a better starting point for building up a physical scene with interactions (*: Assets are generated from SAM-3D).</p>
-            </div>
-
-            <div class="results-grid">
-                <!-- Art -->
-                <div class="result-card scroll-animate">
-                    <div class="result-media">
-                        <div class="floating-labels">
-                            <span class="floating-label label-left">Input</span>
-                            <span class="floating-label label-center">"Reconstruct the scene"*</span>
-                            <span class="floating-label label-right">"Throw a ball to knock over all the objects"</span>
-                        </div>
-                        <div class="media-item">
-                            <img src="assets/dynamic/art/target.png" alt="Art Input">
-                        </div>
-                        <div class="media-item">
-                            <video autoplay muted loop playsinline>
-                                <source src="assets/dynamic/art/render.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="media-item">
-                            <video autoplay muted loop playsinline>
-                                <source src="assets/dynamic/art/art.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mirror -->
-                <div class="result-card scroll-animate">
-                    <div class="result-media">
-                        <div class="floating-labels">
-                            <span class="floating-label label-left">Input</span>
-                            <span class="floating-label label-center">"Reconstruct the scene"</span>
-                            <span class="floating-label label-right">"Throw a ball to break the mirror"</span>
-                        </div>
-                        <div class="media-item">
-                            <img src="assets/dynamic/mirror/target.jpeg" alt="Mirror Input">
-                        </div>
-                        <div class="media-item">
-                            <video autoplay muted loop playsinline>
-                                <source src="assets/dynamic/mirror/render.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="media-item">
-                            <video autoplay muted loop playsinline>
-                                <source src="assets/dynamic/mirror/mirror.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Earthquake -->
-                <div class="result-card scroll-animate">
-                    <div class="result-media">
-                        <div class="floating-labels">
-                            <span class="floating-label label-left">Input</span>
-                            <span class="floating-label label-center">"Reconstruct the scene"*</span>
-                            <span class="floating-label label-right">"Simulate an earthquake"</span>
-                        </div>
-                        <div class="media-item">
-                            <img src="assets/dynamic/earthquake/target.png" alt="Earthquake Input">
-                        </div>
-                        <div class="media-item">
-                            <video autoplay muted loop playsinline>
-                                <source src="assets/dynamic/earthquake/render.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="media-item">
-                            <video autoplay muted loop playsinline>
-                                <source src="assets/dynamic/earthquake/earthquake.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <!-- Static Results Scrollable Row -->
-                <div class="static-results-row scroll-animate">
-                    <h2 class="section-title" style="margin-bottom: 20px; font-size: 1.5rem;">Result Gallery</h2>
-                    <div class="static-scroll-container">
-                        <div class="static-scroll-inner">
-                        <!-- Golden Gate Bridge (best) -->
-                        <div class="static-result-item">
-                            <div class="static-result-header">
-                                <h4></h4>
-                            </div>
-                            <div class="static-result-media">
-                                <div class="static-media-item">
-                                    <img src="assets/static/goldengate/target.png" alt="Golden Gate Bridge Input">
-                                    <span class="static-media-label">Input</span>
-                                </div>
-                                <div class="static-media-item">
-                                    <img src="assets/static/goldengate/render.png" alt="Golden Gate Bridge Render">
-                                    <video muted loop playsinline>
-                                        <source src="assets/static/goldengate/goldengate.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="static-media-label">Reconstruction</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Restroom (best) -->
-                        <div class="static-result-item">
-                            <div class="static-result-header">
-                                <h4></h4>
-                            </div>
-                            <div class="static-result-media">
-                                <div class="static-media-item">
-                                    <img src="assets/static/restroom/target.jpeg" alt="Restroom Input">
-                                    <span class="static-media-label">Input</span>
-                                </div>
-                                <div class="static-media-item">
-                                    <img src="assets/static/restroom/render.png" alt="Restroom Render">
-                                    <video muted loop playsinline>
-                                        <source src="assets/static/restroom/restroom.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="static-media-label">Reconstruction</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Kitchen (medium) -->
-                        <div class="static-result-item">
-                            <div class="static-result-header">
-                                <h4></h4>
-                            </div>
-                            <div class="static-result-media">
-                                <div class="static-media-item">
-                                    <img src="assets/static/kitchen/target.png" alt="Kitchen Input">
-                                    <span class="static-media-label">Input</span>
-                                </div>
-                                <div class="static-media-item">
-                                    <img src="assets/static/kitchen/render.png" alt="Kitchen Render">
-                                    <video muted loop playsinline>
-                                        <source src="assets/static/kitchen/kitchen.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="static-media-label">Reconstruction</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Blue Room (medium) -->
-                        <div class="static-result-item">
-                            <div class="static-result-header">
-                                <h4></h4>
-                            </div>
-                            <div class="static-result-media">
-                                <div class="static-media-item">
-                                    <img src="assets/static/blueroom/target.jpeg" alt="Blue Room Input">
-                                    <span class="static-media-label">Input</span>
-                                </div>
-                                <div class="static-media-item">
-                                    <img src="assets/static/blueroom/render.png" alt="Blue Room Render">
-                                    <video muted loop playsinline>
-                                        <source src="assets/static/blueroom/blueroom.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="static-media-label">Reconstruction</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bathroom (worst) -->
-                        <div class="static-result-item">
-                            <div class="static-result-header">
-                                <h4></h4>
-                            </div>
-                            <div class="static-result-media">
-                                <div class="static-media-item">
-                                    <img src="assets/static/bathroom/target.png" alt="Bathroom Input">
-                                    <span class="static-media-label">Input</span>
-                                </div>
-                                <div class="static-media-item">
-                                    <img src="assets/static/bathroom/render.png" alt="Bathroom Render">
-                                    <video muted loop playsinline>
-                                        <source src="assets/static/bathroom/bathroom.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="static-media-label">Reconstruction</span>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <p class="section-footnote" style="margin-top: 12px; font-style: italic;">* Scroll left or right to see more results.</p>
-                </div>
-            </div>
-
-            <!-- SAM-3D Footnote -->
-            <!-- <p class="section-footnote scroll-animate">* For the Art and Earthquake examples, SAM-3D is used as a tool for initialization.</p> -->
-        </div>
-    </section>
-
-
-
-
-    <!-- Fine-grained Visual Refinement Section -->
-    <section class="section" id="refinement">
-        <div class="container wide">
-            <div class="pipeline-content">
-                <div class="section-header scroll-animate">
-                    <h2 class="section-title">Fine-grained Visual Refinement</h2>
-                </div>
-                <div class="video-container scroll-animate" style="border-radius: 0; margin-bottom: 20px;">
-                    <img src="assets/method_new.png" alt="Method Overview" style="width: 100%; display: block;">
-                </div>
-                <div class="video-container scroll-animate">
-                    <div class="video-wrapper">
-                        <video muted loop playsinline controls>
-                            <source src="video/pipeline_white.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-                <p class="video-caption scroll-animate">See how VIGA performs fine-grained visual refinement through an example of placing a basketball on a table.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- BlenderBench Section (Core Contribution) -->
-    <section class="section" id="blenderbench">
-        <div class="container wide">
-            <div class="section-header scroll-animate">
-                <h2 class="section-title">BlenderBench <a href="https://huggingface.co/datasets/DietCoke4671/BlenderBench" target="_blank" style="text-decoration: none; margin-left: 8px;"><img src="assets/huggingface_logo-noborder.svg" width="32" height="32" style="display: inline-block; vertical-align: middle; opacity: 0.7; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'"></a></h2>
-                <p class="section-desc">We introduce BlenderBench, a comprehensive benchmark for evaluating 3D scene reconstruction with 30 challenging tasks. VIGA achieves <strong>+124.70%</strong> average improvement on BlenderBench.</p>
-                <!-- <p class="section-desc">We introduce BlenderBench, a comprehensive benchmark for evaluating 3D scene reconstruction with 30 challenging tasks. We compare VIGA against BlenderAlchemy, a memory-less variant of VIGA. VIGA achieves <strong>+113%</strong> average improvement over one-shot baselines. The improvement metric is calculated comprehensively across all evaluation metrics.</p> -->
-            </div>
-
-            <div class="tables-container">
-                <div class="table-card scroll-animate">
-                    <div class="table-header">
-                        <p>BlenderBench consists of 30 challenging tasks covering camera adjustment (Task 1), multi-step editing (Task 2), and compositional editing (Task 3). We compare VIGA against a one-shot baseline and BlenderAlchemy, a memory-less variant of VIGA. We report PL = Photometric Loss (lower is better); VLM = VLM Score (higher is better); IMPR. = Improvement (calculated across all the metrics in the original paper, not just the ones mentioned here). </p>
-                        <div class="table-header-image-full">
-                            <img src="assets/blenderstudio_new.png" alt="BlenderBench Overview">
-                        </div>
-                    </div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Method</th>
-                                    <th>Task 1<br>(PL ↓)</th>
-                                    <th>Task 1<br>(VLM ↑)</th>
-                                    <th>Task 2<br>(PL ↓)</th>
-                                    <th>Task 2<br>(VLM ↑)</th>
-                                    <th>Task 3<br>(PL ↓)</th>
-                                    <th>Task 3<br>(VLM ↑)</th>
-                                    <th>Impr. ↑<br>(%)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="method-baseline">
-                                    <td class="method-name">GPT-4o (One-Shot)</td>
-                                    <td>48.16</td>
-                                    <td>0.58</td>
-                                    <td>7.36</td>
-                                    <td>2.75</td>
-                                    <td>30.14</td>
-                                    <td>0.25</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-1)</td>
-                                    <td>10.62</td>
-                                    <td>1.75</td>
-                                    <td>6.13</td>
-                                    <td>3.08</td>
-                                    <td>19.60</td>
-                                    <td>0.67</td>
-                                    <td>67.56</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-1)</td>
-                                    <td>8.56</td>
-                                    <td>1.44</td>
-                                    <td>5.11</td>
-                                    <td>3.58</td>
-                                    <td>14.51</td>
-                                    <td>1.53</td>
-                                    <td>113.96</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-4)</td>
-                                    <td>14.50</td>
-                                    <td>1.75</td>
-                                    <td class="best-score">1.95</td>
-                                    <td>3.53</td>
-                                    <td>20.62</td>
-                                    <td>0.56</td>
-                                    <td>77.48</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-4)</td>
-                                    <td class="best-score">5.47</td>
-                                    <td class="best-score">3.25</td>
-                                    <td>2.94</td>
-                                    <td class="best-score">3.83</td>
-                                    <td>12.62</td>
-                                    <td>1.61</td>
-                                    <td class="best-score">159.19</td>
-                                </tr>
-                                <tr class="method-baseline">
-                                    <td class="method-name">Qwen3-VL-8B (One-Shot)</td>
-                                    <td>60.82</td>
-                                    <td>0.28</td>
-                                    <td>33.14</td>
-                                    <td>1.61</td>
-                                    <td>22.81</td>
-                                    <td>1.25</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-1)</td>
-                                    <td>25.61</td>
-                                    <td>0.36</td>
-                                    <td>10.69</td>
-                                    <td>2.64</td>
-                                    <td>30.45</td>
-                                    <td>0.64</td>
-                                    <td>27.36</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-1)</td>
-                                    <td>10.54</td>
-                                    <td>1.31</td>
-                                    <td>3.85</td>
-                                    <td>3.33</td>
-                                    <td>11.35</td>
-                                    <td class="best-score">2.25</td>
-                                    <td>112.79</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-4)</td>
-                                    <td>11.57</td>
-                                    <td>1.19</td>
-                                    <td>5.38</td>
-                                    <td>2.94</td>
-                                    <td>23.62</td>
-                                    <td>0.93</td>
-                                    <td>82.24</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-4)</td>
-                                    <td>8.80</td>
-                                    <td>1.38</td>
-                                    <td>5.02</td>
-                                    <td>3.08</td>
-                                    <td class="best-score">9.08</td>
-                                    <td>2.02</td>
-                                    <td>112.87</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BlenderGym Section -->
-    <section class="section" id="benchmarks">
-        <div class="container wide">
-            <div class="section-header scroll-animate">
-                <h2 class="section-title">BlenderGym</h2>
-                <p class="section-desc">VIGA also achieves <strong>+35.32%</strong> improvement on an existing benchmark, BlenderGym, demonstrating strong generalization capability across diverse graphics editing tasks.</p>
-            </div>
-
-            <div class="tables-container">
-                <!-- BlenderGym Results -->
-                <div class="table-card scroll-animate">
-                    <div class="table-header">
-                        <p>BlenderGym evaluates single-step graphics editing across five categories. We report N-CLIP = Negative CLIP Scores (lower is better); IMPR. = Improvement (calculated across all the metrics in the original paper, not just the one mentioned here).</p>
-                    </div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Method</th>
-                                    <th>Blend Shape ↓</th>
-                                    <th>Placement ↓</th>
-                                    <th>Geometry ↓</th>
-                                    <th>Lighting ↓</th>
-                                    <th>Material ↓</th>
-                                    <th>Impr. ↑</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="method-baseline">
-                                    <td class="method-name">GPT-4o (One-Shot)</td>
-                                    <td>19.96</td>
-                                    <td>29.31</td>
-                                    <td>24.91</td>
-                                    <td>2.17</td>
-                                    <td>15.25</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-1)</td>
-                                    <td>20.19</td>
-                                    <td>28.07</td>
-                                    <td>20.61</td>
-                                    <td>1.82</td>
-                                    <td>12.05</td>
-                                    <td>12.33</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-1)</td>
-                                    <td>16.70</td>
-                                    <td>26.87</td>
-                                    <td>15.76</td>
-                                    <td>1.41</td>
-                                    <td>9.39</td>
-                                    <td>26.88</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-4)</td>
-                                    <td>17.19</td>
-                                    <td>25.58</td>
-                                    <td>11.68</td>
-                                    <td>1.23</td>
-                                    <td>12.20</td>
-                                    <td>27.63</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-4)</td>
-                                    <td class="best-score">13.08</td>
-                                    <td class="best-score">17.48</td>
-                                    <td class="best-score">7.36</td>
-                                    <td class="best-score">1.01</td>
-                                    <td class="best-score">7.63</td>
-                                    <td class="best-score">48.86</td>
-                                </tr>
-                                <tr class="method-baseline">
-                                    <td class="method-name">Qwen3-VL-8B (One-Shot)</td>
-                                    <td>21.78</td>
-                                    <td>41.44</td>
-                                    <td>14.02</td>
-                                    <td>12.30</td>
-                                    <td>17.16</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-1)</td>
-                                    <td>31.50</td>
-                                    <td>39.47</td>
-                                    <td>14.47</td>
-                                    <td>6.44</td>
-                                    <td>16.98</td>
-                                    <td>5.81</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-1)</td>
-                                    <td>27.07</td>
-                                    <td>28.12</td>
-                                    <td>12.24</td>
-                                    <td>2.58</td>
-                                    <td>11.53</td>
-                                    <td>22.64</td>
-                                </tr>
-                                <tr>
-                                    <td class="method-name">BlenderAlchemy (best-of-4)</td>
-                                    <td>19.60</td>
-                                    <td>36.34</td>
-                                    <td>12.62</td>
-                                    <td>4.23</td>
-                                    <td>17.12</td>
-                                    <td>23.23</td>
-                                </tr>
-                                <tr class="method-ours">
-                                    <td class="method-name">VIGA-Ours (best-of-4)</td>
-                                    <td>17.97</td>
-                                    <td>24.28</td>
-                                    <td>10.08</td>
-                                    <td>2.53</td>
-                                    <td>9.30</td>
-                                    <td>42.88</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Visualization Trajectory -->
-                <div class="table-card scroll-animate">
-                    <div class="table-header">
-                        <h4>Trajectory Visualization</h4>
-                    </div>
-                    <div style="padding: 16px 24px;">
-                        <img src="assets/benchmarks.png" alt="Visualization Trajectory" style="width: 100%; height: auto; display: block;">
-                        <p class="section-footnote" style="margin-top: 16px;">* As shown in the last line, VIGA also generalizes to other programmatic content creation tasks such as 2D slide design.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Abstract Section (moved to end) -->
-    <!-- <section class="section" id="abstract">
+    <header class="topbar">
         <div class="container">
-            <div class="section-header scroll-animate">
-                <h2 class="section-title">Abstract</h2>
-            </div>
-            <div class="abstract scroll-animate" style="margin-top: 0;">
-                <p>
-                    We present VIGA, an execution-grounded, analysis-by-synthesis code agent that reconstructs real images as editable, executable scene programs in graphics engines. Rather than generating scene code in a single pass, VIGA alternates between Generator and Verifier roles: it writes code, executes it in a graphics engine, renders the scene from multiple viewpoints, identifies discrepancies with the input image, and iteratively refines the program. Operating entirely zero-shot without fine-tuning, VIGA leverages an evolving contextual memory that accumulates plans, code diffs, verification feedback, and render history to progressively transform imprecise attempts into coherent programs. Beyond 3D reconstruction, the framework enables programmatic scene editing, 4D dynamic reconstruction, and structured 2D layout synthesis. We introduce BlenderBench to evaluate reconstruction fidelity and agentic behaviors including multi-view spatial consistency, discrepancy localization, and sustained multi-modal tool use.
-                </p>
+            <div class="topbar-inner">
+                <div class="logo">LODIM 3D</div>
+                <nav class="links">
+                    <a href="#works">Works</a>
+                    <a href="#services">Services</a>
+                    <a href="#process">Process</a>
+                    <a href="#contact">Contact</a>
+                </nav>
             </div>
         </div>
-    </section> -->
+    </header>
 
-    <!-- BibTeX Section -->
-    <section class="section bibtex-section" id="citation">
-        <div class="container">
-            <div class="section-header scroll-animate">
-                <h2 class="section-title">BibTeX</h2>
-                <p class="section-desc">If you find our work useful, please consider citing:</p>
-            </div>
-
-            <div class="bibtex-container scroll-animate">
-                <div class="bibtex-box">
-                    <button class="copy-btn" onclick="copyBibtex()">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                    <pre id="bibtex-content">@misc{yin2026visionasinversegraphicsagentinterleavedmultimodal,
-      title={Vision-as-Inverse-Graphics Agent via Interleaved Multimodal Reasoning}, 
-      author={Shaofeng Yin and Jiaxin Ge and Zora Zhiruo Wang and Xiuyu Li and Michael J. Black and Trevor Darrell and Angjoo Kanazawa and Haiwen Feng},
-      year={2026},
-      eprint={2601.11109},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2601.11109}, 
-}</pre>
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <span class="eyebrow">3D Freelancer Portfolio</span>
+                    <h1>브랜드를 움직이게 만드는 3D 모션 디자인</h1>
+                    <p class="hero-line">3-7초 3D 로고/인트로, 쇼츠 광고, 제품 시네마틱을 제작합니다.</p>
+                    <p class="hero-line">빠른 턴어라운드로 첫 시안 전달부터 최종 납품까지 깔끔하게 진행합니다.</p>
+                </div>
+                <div class="hero-media">
+                    <video src="video/pipeline_white.mp4" autoplay muted loop playsinline></video>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
+        <section class="section" id="works">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Works</h2>
+                    <p>기존 프로젝트 에셋을 플레이스홀더로 사용한 대표 작업 3건입니다.</p>
+                </div>
+                <div class="works-grid">
+                    <article class="card">
+                        <div class="card-media">
+                            <video src="video/video1_cursor.mp4" autoplay muted loop playsinline></video>
+                        </div>
+                        <div class="card-body">
+                            <h3>Logo Intro Motion</h3>
+                            <p>브랜드 인트로용 3D 로고 애니메이션 템플릿.</p>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-media">
+                            <img src="assets/static/goldengate/render.png" alt="Product cinematic placeholder">
+                        </div>
+                        <div class="card-body">
+                            <h3>Product Cinematic</h3>
+                            <p>제품 디테일을 강조하는 시네마틱 쇼트 구성.</p>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="card-media">
+                            <video src="assets/dynamic/art/art.mp4" autoplay muted loop playsinline></video>
+                        </div>
+                        <div class="card-body">
+                            <h3>Shorts Ad Loop</h3>
+                            <p>쇼츠/릴스 배포용 세로형 광고 모션 스타일.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-    <script>
-        // Tab switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabId = btn.dataset.tab;
-                
-                // Update active tab button
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                // Update active tab content
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
+        <section class="section" id="services">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Services</h2>
+                    <p>필요한 길이와 용도에 맞춰 컷 구성, 텍스처, 렌더 스타일을 맞춤 설계합니다.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <strong>3D 로고 / 인트로</strong>
+                        3-7초 오프닝 시퀀스, 브랜드 톤에 맞춘 모션과 라이팅 제작.
+                    </div>
+                    <div class="service-item">
+                        <strong>쇼츠 광고 모션</strong>
+                        짧은 러닝타임에 맞춘 강한 훅 중심 모션과 카피 배치.
+                    </div>
+                    <div class="service-item">
+                        <strong>제품 시네마틱</strong>
+                        소재감과 형태를 강조하는 클로즈업 중심 연출 및 렌더.
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        // Scroll animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
+        <section class="section" id="process">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Process</h2>
+                    <p>request → first draft → 1-2 revisions → delivery</p>
+                </div>
+                <div class="process-track">
+                    <div class="process-step">
+                        <span class="index">01</span>
+                        <span class="label">request</span>
+                    </div>
+                    <div class="process-step">
+                        <span class="index">02</span>
+                        <span class="label">first draft</span>
+                    </div>
+                    <div class="process-step">
+                        <span class="index">03</span>
+                        <span class="label">1-2 revisions</span>
+                    </div>
+                    <div class="process-step">
+                        <span class="index">04</span>
+                        <span class="label">delivery</span>
+                    </div>
+                </div>
+                <div class="process-arrow">request → first draft → 1-2 revisions → delivery</div>
+            </div>
+        </section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Contact</h2>
+                    <p>프로젝트 범위와 일정만 보내주시면 바로 견적과 제작 플로우를 안내드립니다.</p>
+                </div>
+                <div class="contact-box">
+                    <a href="mailto:hello@lodim3d.com">hello@lodim3d.com</a>
+                    <p>24시간 내 답장</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        document.querySelectorAll('.scroll-animate').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Toggle More Results
-        function toggleMoreResults(btn) {
-            const content = document.getElementById('more-results');
-            const span = btn.querySelector('span');
-            btn.classList.toggle('expanded');
-            content.classList.toggle('show');
-            if (content.classList.contains('show')) {
-                span.textContent = 'Hide Results';
-            } else {
-                span.textContent = 'More Results';
-            }
-        }
-
-
-        // Copy BibTeX
-        function copyBibtex() {
-            const bibtexContent = document.getElementById('bibtex-content').textContent;
-            navigator.clipboard.writeText(bibtexContent).then(() => {
-                const btn = document.querySelector('.copy-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                }, 2000);
-            });
-        }
-
-        // Video play on hover (only for videos without autoplay attribute)
-        document.querySelectorAll('.result-card video:not([autoplay])').forEach(video => {
-            video.addEventListener('mouseenter', () => {
-                video.play();
-            });
-            video.addEventListener('mouseleave', () => {
-                video.pause();
-                video.currentTime = 0;
-            });
-        });
-
-        // Handle hover play for static results
-        document.querySelectorAll('.static-media-item video').forEach(video => {
-            const mediaItem = video.closest('.static-media-item');
-            mediaItem.addEventListener('mouseenter', () => {
-                video.play();
-            });
-            mediaItem.addEventListener('mouseleave', () => {
-                video.pause();
-                video.currentTime = 0;
-            });
-        });
-
-        // Auto-scroll with drag support for static results - infinite seamless loop
-        const scrollContainer = document.querySelector('.static-scroll-container');
-        if (scrollContainer) {
-            const scrollInner = scrollContainer.querySelector('.static-scroll-inner');
-
-            // Clone all items twice (prepend and append) for seamless bidirectional loop
-            const items = Array.from(scrollInner.children);
-
-            // Prepend clones for backward scrolling
-            items.slice().reverse().forEach(item => {
-                const clone = item.cloneNode(true);
-                scrollInner.insertBefore(clone, scrollInner.firstChild);
-            });
-
-            // Append clones for forward scrolling
-            items.forEach(item => {
-                const clone = item.cloneNode(true);
-                scrollInner.appendChild(clone);
-            });
-
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-            let autoScrollInterval;
-            let isUserInteracting = false;
-
-            // Calculate the width of one set of content (1/3 of total since we have 3 copies)
-            const singleSetWidth = scrollInner.scrollWidth / 3;
-
-            // Start at the middle set
-            scrollContainer.scrollLeft = singleSetWidth;
-
-            // Auto-scroll function with seamless loop
-            function startAutoScroll() {
-                autoScrollInterval = setInterval(() => {
-                    if (!isUserInteracting && !isDown) {
-                        scrollContainer.scrollLeft += 1;
-
-                        // Seamless loop: when we reach the end of middle set, jump back to start of middle set
-                        if (scrollContainer.scrollLeft >= singleSetWidth * 2) {
-                            scrollContainer.scrollLeft = singleSetWidth;
-                        }
-                    }
-                }, 30);
-            }
-
-            // Mouse drag to scroll
-            scrollContainer.addEventListener('mousedown', (e) => {
-                isDown = true;
-                scrollContainer.classList.add('grabbing');
-                startX = e.pageX - scrollContainer.offsetLeft;
-                scrollLeft = scrollContainer.scrollLeft;
-            });
-
-            scrollContainer.addEventListener('mouseleave', () => {
-                isDown = false;
-                scrollContainer.classList.remove('grabbing');
-                isUserInteracting = false;
-            });
-
-            scrollContainer.addEventListener('mouseup', () => {
-                isDown = false;
-                scrollContainer.classList.remove('grabbing');
-                setTimeout(() => {
-                    isUserInteracting = false;
-                }, 1000); // Resume auto-scroll after 1 second
-            });
-
-            scrollContainer.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                isUserInteracting = true;
-                const x = e.pageX - scrollContainer.offsetLeft;
-                const walk = (x - startX) * 2; // Scroll speed multiplier
-                scrollContainer.scrollLeft = scrollLeft - walk;
-            });
-
-            // Handle manual scrolling - seamless bidirectional loop
-            scrollContainer.addEventListener('scroll', () => {
-                // When user scrolls past the middle set (forward), loop back to start of middle set
-                if (scrollContainer.scrollLeft >= singleSetWidth * 2) {
-                    scrollContainer.scrollLeft = singleSetWidth + (scrollContainer.scrollLeft - singleSetWidth * 2);
-                }
-                // When user scrolls before the middle set (backward), loop to end of middle set
-                else if (scrollContainer.scrollLeft < singleSetWidth) {
-                    scrollContainer.scrollLeft = singleSetWidth * 2 - (singleSetWidth - scrollContainer.scrollLeft);
-                }
-            });
-
-            // Pause auto-scroll on hover
-            scrollContainer.addEventListener('mouseenter', () => {
-                isUserInteracting = true;
-            });
-
-            // Start auto-scroll
-            startAutoScroll();
-        }
-    </script>
+    <footer>
+        <div class="container">© 2026 LODIM 3D Freelancer Portfolio</div>
+    </footer>
 </body>
 </html>
-
